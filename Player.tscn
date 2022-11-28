@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Camera.gd" type="Script" id=1]
+[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://art/player.glb" type="PackedScene" id=3]
+
+[sub_resource type="CapsuleMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+
+[sub_resource type="CapsuleShape" id=3]
+
+[node name="KinematicBody" type="KinematicBody"]
+script = ExtResource( 2 )
+
+[node name="Pivot" type="Spatial" parent="."]
+transform = Transform( 0.999974, 0.00373969, -0.00609864, -0.00374069, 0.999993, -0.000151877, 0.00609803, 0.00017471, 0.999981, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Pivot"]
+transform = Transform( 0.7, 0, 0, 0, -3.0598e-08, -0.8, 0, 0.7, -3.49691e-08, 0, 1.5, 0 )
+visible = false
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="player" parent="Pivot" instance=ExtResource( 3 )]
+transform = Transform( 1, -4.5361e-11, 0, 4.22915e-11, 1, 5.82077e-11, 0, 0, 1, -0.00228052, 0.609649, -9.26068e-05 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.7, 0, 0, 0, -3.0598e-08, -0.8, 0, 0.7, -3.49691e-08, 0, 1.5, 0 )
+shape = SubResource( 3 )
+
+[node name="Camroot" type="Spatial" parent="."]
+script = ExtResource( 1 )
+
+[node name="h" type="Spatial" parent="Camroot"]
+
+[node name="v" type="Spatial" parent="Camroot/h"]
+transform = Transform( 1, 0, 0, 0, 0.920505, 0.390731, 0, -0.390731, 0.920505, 0, 2, 0 )
+
+[node name="Camera" type="ClippedCamera" parent="Camroot/h/v"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
+current = true
+process_mode = 1
