@@ -1,5 +1,6 @@
 extends KinematicBody
 
+signal win
 # How fast the player moves in meters per second.
 export var speed = 14.0
 # The downward acceleration when in the air, in meters per second squared.
@@ -23,7 +24,8 @@ func _physics_process(delta):
 		direction += -Vector3(cos(cam_direction), 0, sin(cam_direction))
 	if Input.is_action_pressed("move_right"):
 		direction += Vector3(cos(cam_direction), 0, sin(cam_direction))
-		
+	if Input.is_action_just_pressed("restart"):
+		get_tree().reload_current_scene()
 	
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
@@ -41,3 +43,10 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector3.UP)
 
 	#$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
+
+func win():
+	emit_signal("win")
+	$Camroot/h/v/Camera.set_current(false)
+
+func _on_WinDetector_body_entered(_body):
+	win()
