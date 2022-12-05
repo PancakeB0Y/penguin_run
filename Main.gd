@@ -1,7 +1,9 @@
 extends Node
 
+export (PackedScene) var penguin_scene = preload("res://Penguin.tscn")
+
 func _ready():
-	pass
+	randomize()
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept") and $UserInterface/Win.visible: 
@@ -11,3 +13,13 @@ func _unhandled_input(event):
 func _on_Player_win():
 	get_tree().set_pause(true)
 	$UserInterface/Win.show()
+
+func _on_PenguinTimer_timeout():
+	var penguin = penguin_scene.instance()
+	
+	var penguin_spawn_location = $SpawnPath/SpawnLocation
+	penguin_spawn_location.unit_offset = randf()
+	
+	add_child(penguin)
+	penguin.intitialize(penguin_spawn_location.translation)
+

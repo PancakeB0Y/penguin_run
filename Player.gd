@@ -7,6 +7,8 @@ export var speed = 14.0
 export var fall_acceleration = 70.0
 # Jump length in the Y dimension
 export var jump_impulse = 25.0
+export var in_interact_range = false
+var cur_body
 
 var velocity = Vector3.ZERO
 
@@ -31,7 +33,6 @@ func _physics_process(delta):
 		direction = direction.normalized()
 		$Pivot.look_at(translation + direction, Vector3.UP)
 
-			
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
 	
@@ -43,6 +44,13 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, Vector3.UP)
 
 	#$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
+	
+	if in_interact_range:
+		if cur_body.clothes == true:
+			if Input.is_action_pressed("interact"):
+				get_node("/root/Main/UserInterface/Temperature").temp += 10
+				cur_body.clothes = false
+				
 
 func win():
 	emit_signal("win")
@@ -50,3 +58,10 @@ func win():
 
 func _on_WinDetector_body_entered(_body):
 	win()
+
+func _on_InteractRange_body_entered(body):
+	in_interact_range = true
+	cur_body = body
+
+func _on_InteractRange_body_exited(body):
+	in_interact_range = false
