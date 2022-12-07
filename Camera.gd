@@ -17,10 +17,7 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		camrot_h += -event.relative.x * h_sensitivity
 		camrot_v += -event.relative.y * v_sensitivity
+		camrot_v = clamp(camrot_v, cam_v_min, cam_v_max)
+		$h.rotation_degrees.y = lerp($h.rotation_degrees.y, camrot_h, 1.0/60.0 * h_acceleration)
+		$h/v.rotation_degrees.x = lerp($h/v.rotation_degrees.x, camrot_v, 1.0/60.0 * v_acceleration)
 		
-func _physics_process(delta):
-	camrot_v = clamp(camrot_v, cam_v_min, cam_v_max)
-	
-	$h.rotation_degrees.y = lerp($h.rotation_degrees.y, camrot_h, delta * h_acceleration)
-	$h/v.rotation_degrees.x = lerp($h/v.rotation_degrees.x, camrot_v, delta * v_acceleration)
-	

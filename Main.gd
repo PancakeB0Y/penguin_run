@@ -5,6 +5,20 @@ export (PackedScene) var penguin_scene = preload("res://Penguin.tscn")
 func _ready():
 	randomize()
 
+	for i in 10000:
+		var penguin = penguin_scene.instance()
+		var n1 = randf()
+		var n2 = randf()
+		var max_distance = 500
+		var angle = n1*2*PI
+		var radius = pow(n2, 1.0/3.0)*max_distance
+		var x = cos(angle)*radius
+		var z = sin(angle)*radius
+		var location = Vector3(x, 0, z)
+		add_child(penguin)
+		penguin.intitialize(location)
+	
+
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept") and $UserInterface/Win.visible: 
 		get_tree().reload_current_scene()
@@ -14,12 +28,12 @@ func _on_Player_win():
 	get_tree().set_pause(true)
 	$UserInterface/Win.show()
 
-func _on_PenguinTimer_timeout():
-	var penguin = penguin_scene.instance()
+#func _on_PenguinTimer_timeout():
+#	var penguin = penguin_scene.instance()
 	
-	var penguin_spawn_location = $SpawnPath/SpawnLocation
-	penguin_spawn_location.unit_offset = randf()
+#	var penguin_spawn_location = $SpawnPath/SpawnLocation
+#	penguin_spawn_location.unit_offset = randf()
 	
-	add_child(penguin)
-	penguin.intitialize(penguin_spawn_location.translation)
+#	add_child(penguin)
+#	penguin.intitialize(penguin_spawn_location.translation)
 

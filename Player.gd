@@ -2,7 +2,7 @@ extends KinematicBody
 
 signal win
 # How fast the player moves in meters per second.
-export var speed = 14.0
+export var speed = 50.0
 # The downward acceleration when in the air, in meters per second squared.
 export var fall_acceleration = 70.0
 # Jump length in the Y dimension
@@ -35,14 +35,14 @@ func _physics_process(delta):
 
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
-	
-	if is_on_floor() and Input.is_action_pressed("jump"):
+	#is_on_floor()
+	if Input.is_action_pressed("jump"):
 		direction.y += 1
 		velocity.y += jump_impulse
 	
-	velocity.y -= fall_acceleration * delta
+	#velocity.y -= fall_acceleration * delta
 	velocity = move_and_slide(velocity, Vector3.UP)
-
+	velocity.y = 0
 	#$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
 	
 	if in_interact_range:

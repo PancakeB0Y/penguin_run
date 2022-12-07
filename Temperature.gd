@@ -9,7 +9,7 @@ func _physics_process(_delta):
 	PlayerPos = get_node("/root/Main/Player").transform.origin
 	distance = sqrt(pow(PlayerPos.x - world_origin[0], 2) + pow(PlayerPos.z - world_origin[2], 2))
 	
-	temp -= 0.001 * distance
+	temp -= 0.00001 * distance
 	text = "Temperature: %s" % floor(temp)
 
 
