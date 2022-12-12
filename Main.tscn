@@ -79,6 +79,7 @@ Press enter to restart"
 align = 1
 
 [node name="CameraPivot" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -92 )
 
 [node name="Camera" type="Camera" parent="CameraPivot"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 31.592, -18.3 )
@@ -93,7 +94,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -56.4212, -5.72205e-06, -141.8
 
 [node name="PenguinTimer" type="Timer" parent="."]
 wait_time = 0.7
-autostart = true
 
 [connection signal="win" from="Player" to="." method="_on_Player_win"]
 [connection signal="timeout" from="PenguinTimer" to="." method="_on_PenguinTimer_timeout"]

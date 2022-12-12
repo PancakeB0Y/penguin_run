@@ -24,10 +24,21 @@ func _physics_process(delta):
 	if translation.y < -15:
 		queue_free()
 		
-	if distance > 100:
-		#set_physics_process(false) 
-		set_pause_mode(false)
-	
+	if distance > 75:
+		set_process(true)
+		set_physics_process(false) 
+		
+func _process(_delta):
+	update_counter += 1
+	if update_counter >= 20:
+		player_pos = player.transform.origin
+		distance = sqrt(pow(player_pos.x - translation.x, 2) + pow(player_pos.z - translation.z, 2))
+		update_counter = 0
+
+	if distance <= 75:
+		set_physics_process(true) 
+		set_process(false)
+
 func intitialize(start_position):
 	translation = start_position
 	rotate_y(randf()*2*PI)

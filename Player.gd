@@ -4,14 +4,13 @@ signal win
 # How fast the player moves in meters per second.
 export var speed = 50.0
 # The downward acceleration when in the air, in meters per second squared.
-export var fall_acceleration = 70.0
+export var fall_acceleration = 75.0
 # Jump length in the Y dimension
-export var jump_impulse = 25.0
+export var jump_impulse = 20.0
 export var in_interact_range = false
 var cur_body
 
 var velocity = Vector3.ZERO
-
 func _physics_process(delta):
 	# We create a local variable to store the input direction.
 	var cam_direction = -$Camroot.camrot_h * PI/180
@@ -35,14 +34,14 @@ func _physics_process(delta):
 
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
-	#is_on_floor()
-	if Input.is_action_pressed("jump"):
+	
+	if is_on_floor() and Input.is_action_just_pressed("jump"): 
 		direction.y += 1
 		velocity.y += jump_impulse
 	
-	#velocity.y -= fall_acceleration * delta
+	velocity.y -= fall_acceleration * delta
 	velocity = move_and_slide(velocity, Vector3.UP)
-	velocity.y = 0
+	#velocity.y = 0
 	#$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
 	
 	if in_interact_range:
@@ -55,6 +54,7 @@ func _physics_process(delta):
 func win():
 	emit_signal("win")
 	$Camroot/h/v/Camera.set_current(false)
+	set_physics_process(false)
 
 func _on_WinDetector_body_entered(_body):
 	win()
@@ -63,5 +63,5 @@ func _on_InteractRange_body_entered(body):
 	in_interact_range = true
 	cur_body = body
 
-func _on_InteractRange_body_exited(body):
+func _on_InteractRange_body_exited(_body):
 	in_interact_range = false
