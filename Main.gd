@@ -8,11 +8,11 @@ func _ready():
 	for i in 100:
 		var n1 = randf()
 		var n2 = randf()
-		var max_distance = 500
+		var max_distance = 550
 		var angle = n1*2*PI
-		var radius = pow(n2, 1.0/3.0)*max_distance
+		var radius = (pow(n2, 1.0/4.0)-0.1)*max_distance
 		var x = cos(angle)*radius
-		var z = sin(angle)*radius
+		var z = sin(angle)*radius*0.5
 		var location = Vector3(x, 0, z)
 		
 		var loops = rand_range(5, 10)
@@ -24,7 +24,6 @@ func _ready():
 			location.z += randz
 			add_child(penguin)
 			penguin.intitialize(location)
-		
 		
 	
 
