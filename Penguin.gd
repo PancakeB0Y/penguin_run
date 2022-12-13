@@ -12,6 +12,9 @@ var player_pos = Vector3.ZERO
 var update_counter = 0;
 
 func _physics_process(delta):	
+	if clothes == false:
+		$LightRay.emitting = false
+	
 	velocity.y -= fall_acceleration * delta
 	velocity = move_and_slide(velocity, Vector3.UP)
 	

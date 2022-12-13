@@ -62,6 +62,7 @@ transform = Transform( 1, 0, 0, 0, 0.920505, 0.390731, 0, -0.390731, 0.920505, 0
 [node name="Camera" type="ClippedCamera" parent="Camroot/h/v"]
 transform = Transform( 1, 0, 0, 0, 0.99598, -0.0895722, 0, 0.0895722, 0.99598, 0, -0.41286, 3.04202 )
 current = true
+far = 1000.0
 process_mode = 1
 
 [connection signal="body_entered" from="WinDetector" to="." method="_on_WinDetector_body_entered"]
